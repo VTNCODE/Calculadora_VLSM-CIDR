@@ -57,7 +57,7 @@ public class SubNetworks {
         for (Networks networks : network) {
             for (int z = 0; z <= 32; z++) {
                 if (networks.getHosts() > Math.pow(2, (32 - z)) - 2) {
-                    Integer hosts = (int)Math.pow(2, (32 - mask)) - 2;
+                    Integer hosts = (int)Math.pow(2, (32 - z + 1)) - 2;
                     Networks networks1 = new Networks(networks.getName(), hosts);
                     networksList.add(networks1);
                     break;
