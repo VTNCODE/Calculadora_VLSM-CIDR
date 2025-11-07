@@ -10,6 +10,13 @@ public class SubNetworks {
     private List<Networks> network = new ArrayList<>();
 
 
+
+
+    public SubNetworks(Integer mask, List<Networks> network) {
+        this.mask = mask;
+        this.network = network;
+    }
+
     public SubNetworks(String ipAddress, Integer mask, List<Networks> network) {
         if (mask > 32 || mask < 0) {
             throw new InvalidMask("Please enter a mask between 0 and 32.");
@@ -75,5 +82,28 @@ public class SubNetworks {
             networksList.add(networks);
         }
         return networksList;
+    }
+     public List<SubNetworks> prefix() {
+         List<SubNetworks> subNetworks = new ArrayList<>();
+         List<Networks> net = new ArrayList<>();
+         for (Networks networks : network) {
+             for (int z = 0; z <= 32; z++) {
+                 if (networks.getHosts() > Math.pow(2, (32 - z)) - 2) {
+                     Networks networks1 = new Networks(networks.getName());
+                     net.add(networks1);
+                     SubNetworks subNetworks1 = new SubNetworks(z, net);
+                     subNetworks.add(subNetworks1);
+                     break;
+                 }
+             }
+         }
+         return subNetworks;
+     }
+
+
+    @Override
+    public String toString () {
+        return "IP ADDRESS: " + ipAddress +
+                "/" + mask;
     }
 }

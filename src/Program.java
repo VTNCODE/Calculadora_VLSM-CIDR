@@ -40,6 +40,7 @@ public class Program {
         System.out.println(network.usedHosts());
         System.out.println(network.availableHosts());
         System.out.println(network.nonUsedHosts());
+        System.out.println(network.prefix());
 
 
     }

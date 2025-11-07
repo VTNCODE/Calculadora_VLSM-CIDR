@@ -7,6 +7,10 @@ public class Networks {
     public Networks() {
     }
 
+    public Networks(String name) {
+        this.name = name;
+    }
+
     public Networks(String name, Integer hosts) {
         this.name = name;
         this.hosts = hosts;
