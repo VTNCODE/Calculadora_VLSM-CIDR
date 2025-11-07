@@ -51,7 +51,7 @@ public class SubNetworks {
             return n;
         }
     }
-    public List<Networks> necessaryHosts() {
+    public List<Networks> availableHosts() {
         List<Networks> networksList = new ArrayList<>();
 
         for (Networks networks : network) {
@@ -63,6 +63,16 @@ public class SubNetworks {
                     break;
                 }
             }
+        }
+        return networksList;
+    }
+
+    public List<Networks> nonUsedHosts() {
+        List<Networks> networksList = new ArrayList<>();
+        for (int i = 0; i < network.size(); i++ ) {
+            Integer hosts = availableHosts().get(i).getHosts() - network.get(i).getHosts();
+            Networks networks = new Networks(network.get(i).getName(), hosts);
+            networksList.add(networks);
         }
         return networksList;
     }

@@ -38,7 +38,8 @@ public class Program {
         System.out.println(networks);
         System.out.println(network.totalHosts(mask));
         System.out.println(network.usedHosts());
-        System.out.println(network.necessaryHosts());
+        System.out.println(network.availableHosts());
+        System.out.println(network.nonUsedHosts());
 
 
     }
