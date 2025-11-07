@@ -12,9 +12,14 @@ public class SubNetworks {
 
 
 
-    public SubNetworks(Integer mask, List<Networks> network) {
+    private SubNetworks(Integer mask, List<Networks> network) {
         this.mask = mask;
         this.network = network;
+    }
+
+    private SubNetworks(String ipAddress, Integer mask) {
+        this.ipAddress = ipAddress;
+        this.mask = mask;
     }
 
     public SubNetworks(String ipAddress, Integer mask, List<Networks> network) {
@@ -91,7 +96,7 @@ public class SubNetworks {
                  if (networks.getHosts() > Math.pow(2, (32 - z)) - 2) {
                      Networks networks1 = new Networks(networks.getName());
                      net.add(networks1);
-                     SubNetworks subNetworks1 = new SubNetworks(z, net);
+                     SubNetworks subNetworks1 = new SubNetworks(z-1, net);
                      subNetworks.add(subNetworks1);
                      break;
                  }
@@ -100,6 +105,40 @@ public class SubNetworks {
          return subNetworks;
      }
 
+     public List<SubNetworks> mask() {
+         List<SubNetworks> subNetworks = new ArrayList<>();
+
+         for (int i = 0; i < network.size(); i++) {
+             String mask;
+             if (prefix().get(i).getMask() >= 24 && prefix().get(i).getMask() <= 30) {
+                 int lastBits = 254 - ((int)Math.pow(2, (32 - prefix().get(i).getMask())) - 2);
+                 mask = "255.255.255." + lastBits;
+                 SubNetworks subNetworks1 = new SubNetworks(mask, prefix().get(i).getMask());
+                 subNetworks.add(subNetworks1);
+             }
+             else if (prefix().get(i).getMask() >= 16 && prefix().get(i).getMask() < 24) {
+                 int lastBits = 256 - (int)Math.pow(2, (24 - prefix().get(i).getMask()));
+                 mask = "255.255." + lastBits + ".0";
+                 SubNetworks subNetworks1 = new SubNetworks(mask, prefix().get(i).getMask());
+                 subNetworks.add(subNetworks1);
+             }
+             else if (prefix().get(i).getMask() >= 8 && prefix().get(i).getMask() < 16) {
+                 int lastBits = 256 - (int)Math.pow(2, (16 - prefix().get(i).getMask()));
+                 mask = "255." + lastBits + ".0.0";
+                 SubNetworks subNetworks1 = new SubNetworks(mask, prefix().get(i).getMask());
+                 subNetworks.add(subNetworks1);
+             }
+             else {
+                 int lastBits = 256 - (int)Math.pow(2, (8 - prefix().get(i).getMask()));
+                 mask = lastBits + ".0.0.0";
+                 SubNetworks subNetworks1 = new SubNetworks(mask, prefix().get(i).getMask());
+                 subNetworks.add(subNetworks1);
+             }
+         }
+
+
+        return subNetworks;
+     }
 
     @Override
     public String toString () {
