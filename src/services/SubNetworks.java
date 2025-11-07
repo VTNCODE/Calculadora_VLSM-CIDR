@@ -9,13 +9,6 @@ public class SubNetworks {
     private Integer mask;
     private List<Networks> network = new ArrayList<>();
 
-    public SubNetworks() {
-    }
-
-    public SubNetworks(String ipAddress, Integer mask) {
-        this.ipAddress = ipAddress;
-        this.mask = mask;
-    }
 
     public SubNetworks(String ipAddress, Integer mask, List<Networks> network) {
         if (mask > 32 || mask < 0) {
@@ -32,10 +25,6 @@ public class SubNetworks {
         return ipAddress;
     }
 
-    public void setIpAddress(String ipAddress) {
-        this.ipAddress = ipAddress;
-    }
-
     public Integer getMask() {
         return mask;
     }
@@ -50,7 +39,7 @@ public class SubNetworks {
     public Integer totalHosts(Integer mask) {
         return (int) Math.pow(2, (32 - mask)) - 2;
     }
-    public Integer necessaryHosts() {
+    public Integer usedHosts() {
         int n = 0;
         for (Networks networks : network) {
             n += networks.getHosts();
@@ -61,6 +50,20 @@ public class SubNetworks {
         else {
             return n;
         }
+    }
+    public List<Networks> necessaryHosts() {
+        List<Networks> networksList = new ArrayList<>();
 
+        for (Networks networks : network) {
+            for (int z = 0; z <= 32; z++) {
+                if (networks.getHosts() > Math.pow(2, (32 - z)) - 2) {
+                    Integer hosts = (int)Math.pow(2, (32 - mask)) - 2;
+                    Networks networks1 = new Networks(networks.getName(), hosts);
+                    networksList.add(networks1);
+                    break;
+                }
+            }
+        }
+        return networksList;
     }
 }
