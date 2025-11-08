@@ -42,6 +42,7 @@ public class Program {
         System.out.println(network.nonUsedHosts());
         System.out.println(network.prefix());
         System.out.println(network.mask());
+        System.out.println(network.wildCardMask());
 
 
     }
