@@ -9,9 +9,9 @@ public class SubNetworks {
     private Integer mask;
     private List<Networks> network = new ArrayList<>();
 
-
-
-
+    private SubNetworks(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
     private SubNetworks(Integer mask, List<Networks> network) {
         this.mask = mask;
         this.network = network;
@@ -139,7 +139,29 @@ public class SubNetworks {
 
         return subNetworks;
      }
+     public List<SubNetworks> wildCardMask() {
+         List<SubNetworks> subNetworks = new ArrayList<>();
 
+         for (int i = 0; i < network.size(); i++) {
+             StringBuilder wildCardMask = new StringBuilder();
+             String []bits = mask().get(i).getIpAddress().split("\\.");
+             for (int z =0; z < bits.length; z++ ) {
+                 int val = Integer.parseInt(bits[z]);
+                 int changes = 255 - val;
+                 if (z == 3) {
+                     wildCardMask.append(changes);
+                 }
+                 else {
+                     wildCardMask.append(changes).append(".");
+                 }
+
+             }
+             SubNetworks subNetworks1 = new SubNetworks(wildCardMask.toString());
+             subNetworks.add(subNetworks1);
+
+         }
+        return subNetworks;
+     }
     @Override
     public String toString () {
         return "IP ADDRESS: " + ipAddress +
