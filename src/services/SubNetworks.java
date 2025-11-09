@@ -1,8 +1,7 @@
 package services;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class SubNetworks {
     private String ipAddress;
@@ -22,9 +21,45 @@ public class SubNetworks {
         this.mask = mask;
     }
 
+    protected SubNetworks(String ipAddress, List<Networks> network) {
+        this.ipAddress = ipAddress;
+        this.network = network;
+    }
+
     public SubNetworks(String ipAddress, Integer mask, List<Networks> network) {
+        String [] ip = ipAddress.split("\\.");
+        int lastEight = Integer.parseInt(ip[3]);
+        int lastSixteen = Integer.parseInt(ip[2]);
+        int last24 = Integer.parseInt(ip[1]);
+        int last32 = Integer.parseInt(ip[0]);
+
+        if (last32 > 255 || last32 < 0) {
+            throw new InvalidAddress("This ip address does not seems valid.");
+        }
+        else if (last24 > 255 || last24 < 0) {
+            throw new InvalidAddress("This ip address does not seems valid.");
+        }
+        else if (lastSixteen > 255 || lastSixteen < 0) {
+            throw new InvalidAddress("This ip address does not seems valid.");
+        }
+        else if (lastEight > 255 || lastEight < 0) {
+            throw new InvalidAddress("This ip address does not seems valid.");
+        }
+
         if (mask > 32 || mask < 0) {
             throw new InvalidMask("Please enter a mask between 0 and 32.");
+        }
+        else if (mask >= 24 && lastEight != 0) {
+            throw new InvalidAddress("This ip can not be fit into this mask.");
+        }
+        else if (mask >= 16 && mask < 24 && lastSixteen != 0) {
+            throw new InvalidAddress("This ip can not be fit into this mask.");
+        }
+        else if (mask >= 8 && mask < 16  && last24 !=0) {
+            throw new InvalidAddress("This ip can not be fit into this mask.");
+        }
+        else if (mask < 8 && last32 !=0) {
+            throw new InvalidAddress("This ip can not be fit into this mask.");
         }
         else {
             this.ipAddress = ipAddress;
@@ -160,6 +195,71 @@ public class SubNetworks {
              subNetworks.add(subNetworks1);
 
          }
+        return subNetworks;
+     }
+     public List<SubNetworks> broadCast() {
+        List<SubNetworks> subNetworks = new ArrayList<>();
+        List<Networks> networks = new ArrayList<>();
+
+        String [] ipAddress = getIpAddress().split("\\.");
+        String [] mask;
+
+        for (int z = 0; z < network.size(); z++) {
+             StringBuilder broadcast = new StringBuilder();
+             mask = mask().get(z).getIpAddress().split("\\.");
+
+             for (int y = 0; y < mask.length; y++) {
+
+                 int val = Integer.parseInt(mask[y]);
+                 int ch = Integer.parseInt(ipAddress[y]);
+
+
+                 if (ch == 255 && val != 0 && z != 0) {
+                     ch = -1;
+                 }
+                 if (val == 255 && Objects.equals(ipAddress[y + 1], "255")) {
+                     ch += 1;
+                 }
+
+
+                 if (z != 0) {
+                     if (val != 255 && val != 0) {
+                         int change = ch + (255 - val) + 1;
+                         if (y == 3) {
+                             broadcast.append(change);
+                         } else {
+                             broadcast.append(change).append(".");
+                         }
+                     } else {
+                         if (y == 3) {
+                             broadcast.append(ch);
+                         }
+                         else {
+                             broadcast.append(ch).append(".");
+                         }
+                     }
+                 }
+                 else {
+                     if (val != 255) {
+                         int change = ch + (255 - val);
+                         if (y == 3) {
+                             broadcast.append(change);
+                         } else {
+                             broadcast.append(change).append(".");
+                         }
+                     } else {
+                         broadcast.append(ch).append(".");
+                     }
+                 }
+             }
+             ipAddress = broadcast.toString().split("\\.");
+
+
+
+             SubNetworks subNetworks1 = new SubNetworks(broadcast.toString(), networks);
+             subNetworks.add(subNetworks1);
+        }
+
         return subNetworks;
      }
     @Override
