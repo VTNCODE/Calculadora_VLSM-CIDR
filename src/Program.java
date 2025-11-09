@@ -23,7 +23,6 @@ public class Program {
         System.out.println();
 
         for (int i = 0; i < subNetworks; i++) {
-
             System.out.printf("Name of sub-network %d: ", i + 1);
             sc.nextLine();
             String name = sc.nextLine();
@@ -43,7 +42,7 @@ public class Program {
         System.out.println(network.prefix());
         System.out.println(network.mask());
         System.out.println(network.wildCardMask());
-
+        System.out.println(network.broadCast());
 
     }
 }
