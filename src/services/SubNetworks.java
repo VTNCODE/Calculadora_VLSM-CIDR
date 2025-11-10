@@ -262,6 +262,48 @@ public class SubNetworks {
 
         return subNetworks;
      }
+
+     public List<SubNetworks> networkAddress() {
+         List<SubNetworks> subNetworks = new ArrayList<>();
+         String [] ipAddress1;
+         String [] mask;
+
+         SubNetworks subNetworks1 = new SubNetworks(getIpAddress());
+         subNetworks.add(subNetworks1);
+
+
+         for (int i = 0; i < network.size()-1; i++ ){
+             StringBuilder ipAdd = new StringBuilder();
+             mask = mask().get(i).getIpAddress().split("\\.");
+             ipAddress1 = broadCast().get(i).getIpAddress().split("\\.");
+
+             for (int z = 0; z < mask.length; z++) {
+                 int val = Integer.parseInt(mask[z]);
+                 int ch = Integer.parseInt(ipAddress1[z]);
+
+                 if (ch == 255) {
+                     ch = 0;
+                 }
+                 if (val == 255 && Objects.equals(ipAddress1[z + 1], "255")) {
+                     ch += 1;
+                 }
+                 if (val != 255 && val != 0 && !Objects.equals(ipAddress1[z], "255")) {
+                     ch += 1;
+                 }
+                 if (z == 3) {
+                     ipAdd.append(ch);
+                 } else {
+                     ipAdd.append(ch).append(".");
+                 }
+             }
+             subNetworks1 = new SubNetworks(ipAdd.toString());
+             subNetworks.add(subNetworks1);
+         }
+
+         return subNetworks;
+     }
+
+
     @Override
     public String toString () {
         return "IP ADDRESS: " + ipAddress +
