@@ -9,6 +9,7 @@ public class SubNetworks {
     private List<Networks> network = new ArrayList<>();
 
     private SubNetworks(String ipAddress) {
+        verifyIpAddress(ipAddress);
         this.ipAddress = ipAddress;
     }
     private SubNetworks(Integer mask, List<Networks> network) {
@@ -17,56 +18,27 @@ public class SubNetworks {
     }
 
     private SubNetworks(String ipAddress, Integer mask) {
+        verifyIpAddress(ipAddress);
         this.ipAddress = ipAddress;
         this.mask = mask;
     }
 
     protected SubNetworks(String ipAddress, List<Networks> network) {
+        verifyIpAddress(ipAddress);
         this.ipAddress = ipAddress;
         this.network = network;
     }
 
     public SubNetworks(String ipAddress, Integer mask, List<Networks> network) {
-        String [] ip = ipAddress.split("\\.");
-        int lastEight = Integer.parseInt(ip[3]);
-        int lastSixteen = Integer.parseInt(ip[2]);
-        int last24 = Integer.parseInt(ip[1]);
-        int last32 = Integer.parseInt(ip[0]);
 
-        if (last32 > 255 || last32 < 0) {
-            throw new InvalidAddress("This ip address does not seems valid.");
-        }
-        else if (last24 > 255 || last24 < 0) {
-            throw new InvalidAddress("This ip address does not seems valid.");
-        }
-        else if (lastSixteen > 255 || lastSixteen < 0) {
-            throw new InvalidAddress("This ip address does not seems valid.");
-        }
-        else if (lastEight > 255 || lastEight < 0) {
-            throw new InvalidAddress("This ip address does not seems valid.");
-        }
+        verifyIpAddress(ipAddress);
+        verifyMask(ipAddress, mask);
 
-        if (mask > 32 || mask < 0) {
-            throw new InvalidMask("Please enter a mask between 0 and 32.");
-        }
-        else if (mask >= 24 && lastEight != 0) {
-            throw new InvalidAddress("This ip can not be fit into this mask.");
-        }
-        else if (mask >= 16 && mask < 24 && lastSixteen != 0) {
-            throw new InvalidAddress("This ip can not be fit into this mask.");
-        }
-        else if (mask >= 8 && mask < 16  && last24 !=0) {
-            throw new InvalidAddress("This ip can not be fit into this mask.");
-        }
-        else if (mask < 8 && last32 !=0) {
-            throw new InvalidAddress("This ip can not be fit into this mask.");
-        }
-        else {
-            Collections.sort(network);
-            this.ipAddress = ipAddress;
-            this.mask = mask;
-            this.network = network;
-        }
+        Collections.sort(network);
+        this.ipAddress = ipAddress;
+        this.mask = mask;
+        this.network = network;
+
     }
 
     public String getIpAddress() {
@@ -355,6 +327,52 @@ public class SubNetworks {
 
         return "IP ADDRESS: " + ipAddress +
                 "/" + mask;
+    }
+
+
+    public void verifyIpAddress(String ipAddress) {
+        String [] ip = ipAddress.split("\\.");
+        int lastEight = Integer.parseInt(ip[3]);
+        int lastSixteen = Integer.parseInt(ip[2]);
+        int last24 = Integer.parseInt(ip[1]);
+        int last32 = Integer.parseInt(ip[0]);
+
+        if (last32 > 255 || last32 < 0) {
+            throw new InvalidAddress("This ip address does not seems valid.");
+        }
+        else if (last24 > 255 || last24 < 0) {
+            throw new InvalidAddress("This ip address does not seems valid.");
+        }
+        else if (lastSixteen > 255 || lastSixteen < 0) {
+            throw new InvalidAddress("This ip address does not seems valid.");
+        }
+        else if (lastEight > 255 || lastEight < 0) {
+            throw new InvalidAddress("This ip address does not seems valid.");
+        }
+    }
+    public void verifyMask(String ipAddress, Integer mask) {
+        String [] ip = ipAddress.split("\\.");
+        int lastEight = Integer.parseInt(ip[3]);
+        int lastSixteen = Integer.parseInt(ip[2]);
+        int last24 = Integer.parseInt(ip[1]);
+        int last32 = Integer.parseInt(ip[0]);
+
+
+        if (mask > 32 || mask < 0) {
+            throw new InvalidMask("Please enter a mask between 0 and 32.");
+        }
+        else if (mask >= 24 && lastEight != 0) {
+            throw new InvalidAddress("This ip can not be fit into this mask.");
+        }
+        else if (mask >= 16 && mask < 24 && lastSixteen != 0) {
+            throw new InvalidAddress("This ip can not be fit into this mask.");
+        }
+        else if (mask >= 8 && mask < 16  && last24 !=0) {
+            throw new InvalidAddress("This ip can not be fit into this mask.");
+        }
+        else if (mask < 8 && last32 !=0) {
+            throw new InvalidAddress("This ip can not be fit into this mask.");
+        }
     }
 
     public void impressResults() {
