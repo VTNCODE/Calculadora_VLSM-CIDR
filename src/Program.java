@@ -43,6 +43,7 @@ public class Program {
         System.out.println(network.mask());
         System.out.println(network.wildCardMask());
         System.out.println(network.broadCast());
+        System.out.println(network.networkAddress());
 
     }
 }
