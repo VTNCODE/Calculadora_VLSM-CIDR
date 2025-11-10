@@ -62,6 +62,7 @@ public class SubNetworks {
             throw new InvalidAddress("This ip can not be fit into this mask.");
         }
         else {
+            Collections.sort(network);
             this.ipAddress = ipAddress;
             this.mask = mask;
             this.network = network;
@@ -75,14 +76,6 @@ public class SubNetworks {
     public Integer getMask() {
         return mask;
     }
-
-    public void setMask(Integer mask) {
-        this.mask = mask;
-    }
-    public List<Networks> getNetwork() {
-        return network;
-    }
-
     public Integer totalHosts(Integer mask) {
         return (int) Math.pow(2, (32 - mask)) - 2;
     }
@@ -375,8 +368,10 @@ public class SubNetworks {
             System.out.println("Mask: " + mask().get(i).getIpAddress());
             System.out.println("Usable Range: " + usableRangeFirstAddress().get(i).getIpAddress() + " - " + usableRangeFinalAddress().get(i).getIpAddress());
             System.out.println("Broadcast: " + broadCast().get(i).getIpAddress());
+            System.out.println("WildCard: " + wildCardMask().get(i).getIpAddress());
             System.out.println();
 
         }
     }
+
 }
