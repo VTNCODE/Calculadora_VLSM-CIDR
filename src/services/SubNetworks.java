@@ -374,7 +374,7 @@ public class SubNetworks {
             System.out.println("Hosts Available: " + availableHosts().get(i).getHosts());
             System.out.println("Unused Hosts: " + nonUsedHosts().get(i).getHosts());
             System.out.println("Network Address: " + networkAddress().get(i).getIpAddress());
-            System.out.println("Slash: " + prefix().get(i).getMask());
+            System.out.println("Slash: \\" + prefix().get(i).getMask());
             System.out.println("Mask: " + mask().get(i).getIpAddress());
             System.out.println("Usable Range: " + usableRangeFirstAddress().get(i).getIpAddress() + " - " + usableRangeFinalAddress().get(i).getIpAddress());
             System.out.println("Broadcast: " + broadCast().get(i).getIpAddress());
