@@ -11,6 +11,7 @@ public class Program {
         Scanner sc = new Scanner(System.in);
         List<Networks> networks = new ArrayList<>();
 
+        Program.resetScreen();
 
         System.out.print("Enter de ip Address: ");
         String ipAddress = sc.nextLine();
@@ -37,5 +38,9 @@ public class Program {
         System.out.println("Subnet hosts needed: " + network.usedHosts());
         System.out.println();
         network.impressResults();
+    }
+    public static void resetScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }
