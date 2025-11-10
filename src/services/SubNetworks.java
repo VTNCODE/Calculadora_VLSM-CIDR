@@ -322,14 +322,6 @@ public class SubNetworks {
         return subNetworks;
     }
 
-    @Override
-    public String toString () {
-
-        return "IP ADDRESS: " + ipAddress +
-                "/" + mask;
-    }
-
-
     public void verifyIpAddress(String ipAddress) {
         String [] ip = ipAddress.split("\\.");
         int lastEight = Integer.parseInt(ip[3]);
@@ -391,5 +383,12 @@ public class SubNetworks {
 
         }
     }
+    @Override
+    public String toString () {
+
+        return "IP ADDRESS: " + ipAddress +
+                "/" + mask;
+    }
+
 
 }
