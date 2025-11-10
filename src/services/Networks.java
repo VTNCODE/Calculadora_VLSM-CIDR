@@ -1,11 +1,8 @@
 package services;
 
-public class Networks {
-    private String name;
+public class Networks implements Comparable<Networks> {
+    private final String name;
     private Integer hosts;
-
-    public Networks() {
-    }
 
     public Networks(String name) {
         this.name = name;
@@ -20,21 +17,18 @@ public class Networks {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Integer getHosts() {
         return hosts;
-    }
-
-    public void setHosts(Integer hosts) {
-        this.hosts = hosts;
     }
 
     @Override
     public String toString() {
         return "Network: " + name + " " + "Hosts: " + hosts;
+    }
+
+    @Override
+    public int compareTo(Networks o) {
+        return o.getHosts() - this.hosts;
     }
 }
 
