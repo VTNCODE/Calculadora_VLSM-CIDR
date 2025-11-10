@@ -33,8 +33,9 @@ public class Program {
         SubNetworks network = new SubNetworks(ipAddress, mask, networks);
 
         System.out.println();
-        System.out.println(network.totalHosts(mask));
-        System.out.println(network.usedHosts());
+        System.out.println("Subnet Total Hosts: " + network.totalHosts(mask));
+        System.out.println("Subnet hosts needed: " + network.usedHosts());
+        System.out.println();
         network.impressResults();
     }
 }
