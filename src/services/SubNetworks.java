@@ -302,11 +302,81 @@ public class SubNetworks {
 
          return subNetworks;
      }
+    public List<SubNetworks> usableRangeFirstAddress() {
+        List<SubNetworks> subNetworks = new ArrayList<>();
+        String [] firstAddress;
 
+        for (int i = 0; i < network.size(); i++ ) {
+            StringBuilder networkAddress = new StringBuilder();
+            firstAddress = networkAddress().get(i).getIpAddress().split("\\.");
+
+            for (int z = 0; z < firstAddress.length; z++) {
+                int ch = Integer.parseInt(firstAddress[z]);
+                if (z == 3) {
+                    ch += 1;
+                }
+                if (z == 3) {
+                    networkAddress.append(ch);
+                }
+                else {
+                    networkAddress.append(ch).append(".");
+                }
+
+            }
+            SubNetworks subNetworks1 = new SubNetworks(networkAddress.toString());
+            subNetworks.add(subNetworks1);
+
+        }
+        return subNetworks;
+    }
+
+    public List<SubNetworks> usableRangeFinalAddress() {
+        List<SubNetworks> subNetworks = new ArrayList<>();
+        String [] firstAddress;
+
+        for (int i = 0; i < network.size(); i++ ) {
+            StringBuilder networkAddress = new StringBuilder();
+            firstAddress = broadCast().get(i).getIpAddress().split("\\.");
+
+            for (int z = 0; z < firstAddress.length; z++) {
+                int ch = Integer.parseInt(firstAddress[z]);
+                if (z == 3) {
+                    ch -= 1;
+                }
+                if (z == 3) {
+                    networkAddress.append(ch);
+                }
+                else {
+                    networkAddress.append(ch).append(".");
+                }
+
+            }
+            SubNetworks subNetworks1 = new SubNetworks(networkAddress.toString());
+            subNetworks.add(subNetworks1);
+        }
+        return subNetworks;
+    }
 
     @Override
     public String toString () {
+
         return "IP ADDRESS: " + ipAddress +
                 "/" + mask;
+    }
+
+    public void impressResults() {
+        for (int i = 0; i < network.size(); i++) {
+            System.out.println("Name: " + network.get(i).getName());
+            System.out.println("Hosts Needed: " + network.get(i).getHosts());
+            System.out.println("Hosts Available: " + availableHosts().get(i).getHosts());
+            System.out.println("Unused Hosts: " + nonUsedHosts().get(i).getHosts());
+            System.out.println("Network Address: " + networkAddress().get(i).getIpAddress());
+            System.out.println("Slash: " + prefix().get(i).getMask());
+            System.out.println("Mask: " + mask().get(i).getIpAddress());
+            System.out.println("Usable Range: " + usableRangeFirstAddress().get(i).getIpAddress() + " - " + usableRangeFinalAddress().get(i).getIpAddress());
+            System.out.println("Broadcast: " + broadCast().get(i).getIpAddress());
+            System.out.println();
+
+        }
     }
 }
