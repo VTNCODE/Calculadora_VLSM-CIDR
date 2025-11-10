@@ -1,5 +1,6 @@
 import services.Networks;
 import services.SubNetworks;
+import util.Screen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ public class Program {
         Scanner sc = new Scanner(System.in);
         List<Networks> networks = new ArrayList<>();
 
-        Program.resetScreen();
+        Screen.resetScreen();
 
         System.out.print("Enter de ip Address: ");
         String ipAddress = sc.nextLine();
@@ -39,8 +40,5 @@ public class Program {
         System.out.println();
         network.impressResults();
     }
-    public static void resetScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
+
 }
