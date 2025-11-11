@@ -31,7 +31,7 @@ public class Texts {
                 bw.newLine();
                 bw.write("Network Address: " + subNetworks.networkAddress().get(i).getIpAddress());
                 bw.newLine();
-                bw.write("Slash: \\" + subNetworks.prefix().get(i).getMask());
+                bw.write("Slash: /" + subNetworks.prefix().get(i).getMask());
                 bw.newLine();
                 bw.write("Mask: " + subNetworks.mask().get(i).getIpAddress());
                 bw.newLine();
