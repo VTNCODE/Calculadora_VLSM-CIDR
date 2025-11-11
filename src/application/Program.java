@@ -43,7 +43,7 @@ public class Program {
         System.out.println();
         network.impressResults();
 
-        Texts texts = new Texts("C:\\Users\\Desktop\\Desktop\\Calculadora_VLSM-CIDR-main", network);
+        Texts texts = new Texts("C:\\Users\\Desktop\\Desktop\\Calculadora_VLSM-CIDR-main\\sub-net.txt", network);
         texts.fileText();
 
         sc.close();
