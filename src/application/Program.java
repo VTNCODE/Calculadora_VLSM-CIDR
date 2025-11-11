@@ -3,13 +3,14 @@ package application;
 import services.Networks;
 import services.SubNetworks;
 import util.Screen;
+import util.Texts;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Program {
-    public static void main (String[]args) {
+    public static void main (String[]args){
 
         Scanner sc = new Scanner(System.in);
         List<Networks> networks = new ArrayList<>();
@@ -41,6 +42,11 @@ public class Program {
         System.out.println("Subnet hosts needed: " + network.usedHosts());
         System.out.println();
         network.impressResults();
+
+        Texts texts = new Texts("C:\\Users\\Desktop\\Desktop\\Calculadora_VLSM-CIDR-main", network);
+        texts.fileText();
+
+        sc.close();
     }
 
 }
