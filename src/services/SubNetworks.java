@@ -41,6 +41,10 @@ public class SubNetworks {
 
     }
 
+    public List<Networks> getNetwork() {
+        return network;
+    }
+
     public String getIpAddress() {
         return ipAddress;
     }
@@ -185,7 +189,6 @@ public class SubNetworks {
                  if (val == 255 && Objects.equals(ipAddress[y + 1], "255")) {
                      ch += 1;
                  }
-
 
                  if (z != 0) {
                      if (val != 255 && val != 0) {
