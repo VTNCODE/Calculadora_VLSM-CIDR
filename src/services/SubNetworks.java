@@ -353,8 +353,8 @@ public class SubNetworks {
         int last32 = Integer.parseInt(ip[0]);
 
 
-        if (mask > 32 || mask < 0) {
-            throw new InvalidMask("Please enter a mask between 0 and 32.");
+        if (mask > 30|| mask < 1) {
+            throw new InvalidMask("Please enter a mask between 1 and 30.");
         }
         else if (mask >= 24 && lastEight != 0) {
             throw new InvalidAddress("This ip can not be fit into this mask.");
@@ -370,8 +370,104 @@ public class SubNetworks {
         }
     }
 
+    public boolean addressMayNotFit(String address) {
+        String [] networkAddress;
+
+        boolean itsBigger = false;
+
+        if (getMask() >= 24 && getMask() <= 30) {
+            networkAddress = address.split("\\.");
+            int last8;
+            last8 = Integer.parseInt(networkAddress[3]);
+            if (getMask() == 25 && last8 >= 128) {
+                itsBigger = true;
+            } else if (getMask() == 26 && last8 >= 64) {
+                itsBigger = true;
+            } else if (getMask() == 27 && last8 >= 32) {
+                itsBigger = true;
+            } else if (getMask() == 28 && last8 >= 16) {
+                itsBigger = true;
+            } else if (getMask() == 29 && last8 >= 7) {
+                itsBigger = true;
+            } else if (getMask() == 30 && last8 >= 3) {
+                itsBigger = true;
+            }
+        }
+        else if (getMask() >= 16 && getMask() < 24) {
+            networkAddress = address.split("\\.");
+            int last16;
+            last16 = Integer.parseInt(networkAddress[2]);
+            if (getMask() == 23 && last16 >= 2) {
+                itsBigger = true;
+            } else if (getMask() == 22 && last16 >= 4) {
+                itsBigger = true;
+            } else if (getMask() == 21 && last16 >= 8) {
+                itsBigger = true;
+            } else if (getMask() == 20 && last16 >= 16) {
+                itsBigger = true;
+            } else if (getMask() == 19 && last16 >= 32) {
+                itsBigger = true;
+            } else if (getMask() == 18 && last16 >= 64) {
+                itsBigger = true;
+            }
+            else if (getMask() == 17 && last16 >=128) {
+                itsBigger = true;
+            }
+        }
+        else if (getMask() >= 8 && getMask() < 16) {
+            networkAddress = address.split("\\.");
+            int last24;
+            last24 = Integer.parseInt(networkAddress[1]);
+            if (getMask() == 15 && last24 >= 2) {
+                itsBigger = true;
+            } else if (getMask() == 14 && last24 >= 4) {
+                itsBigger = true;
+            } else if (getMask() == 13 && last24 >= 8) {
+                itsBigger = true;
+            } else if (getMask() == 12 && last24 >= 16) {
+                itsBigger = true;
+            } else if (getMask() == 11 && last24 >= 32) {
+                itsBigger = true;
+            } else if (getMask() == 10 && last24 >= 64) {
+                itsBigger = true;
+            }
+            else if (getMask() == 9 && last24 >= 128) {
+                itsBigger = true;
+            }
+        }
+        else  {
+            networkAddress = address.split("\\.");
+            int last32;
+            last32 = Integer.parseInt(networkAddress[0]);
+            if (getMask() == 15 && last32 >= 2) {
+                itsBigger = true;
+            } else if (getMask() == 14 && last32 >= 4) {
+                itsBigger = true;
+            } else if (getMask() == 13 && last32 >= 8) {
+                itsBigger = true;
+            } else if (getMask() == 12 && last32 >= 16) {
+                itsBigger = true;
+            } else if (getMask() == 11 && last32 >= 32) {
+                itsBigger = true;
+            } else if (getMask() == 10 && last32 >= 64) {
+                itsBigger = true;
+            }
+            else if (getMask() == 9 && last32 >= 128) {
+                itsBigger = true;
+            }
+        }
+
+
+        return itsBigger;
+
+    }
     public void impressResults() {
+
+
         for (int i = 0; i < network.size(); i++) {
+            if (addressMayNotFit(networkAddress().get(i).getIpAddress())) {
+                System.out.println("WARNING! It looks like this subnet wont fit into your network!");
+            }
             System.out.println("Name: " + network.get(i).getName());
             System.out.println("Hosts Needed: " + network.get(i).getHosts());
             System.out.println("Hosts Available: " + availableHosts().get(i).getHosts());
