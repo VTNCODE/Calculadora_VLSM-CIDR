@@ -31,7 +31,9 @@ public class Texts {
                 bw.newLine();
                 bw.write("Hosts needed: " + subNetworks.getNetwork().get(i).getHosts());
                 bw.newLine();
-                bw.write("Hosts Available: " + subNetworks.nonUsedHosts().get(i).getHosts());
+                bw.write("Hosts Available: " + subNetworks.availableHosts().get(i).getHosts());
+                bw.newLine();
+                bw.write("Unused Hosts: " + subNetworks.nonUsedHosts().get(i).getHosts());
                 bw.newLine();
                 bw.write("Network Address: " + subNetworks.networkAddress().get(i).getIpAddress());
                 bw.newLine();
