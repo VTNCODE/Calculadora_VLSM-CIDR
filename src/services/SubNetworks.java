@@ -466,7 +466,7 @@ public class SubNetworks {
 
         for (int i = 0; i < network.size(); i++) {
             if (addressMayNotFit(networkAddress().get(i).getIpAddress())) {
-                System.out.println("WARNING! It looks like this subnet wont fit into your network!");
+                System.out.println("WARNING! It looks like this subnet won't fit into your network!");
             }
             System.out.println("Name: " + network.get(i).getName());
             System.out.println("Hosts Needed: " + network.get(i).getHosts());
