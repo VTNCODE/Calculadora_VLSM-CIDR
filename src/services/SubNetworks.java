@@ -332,8 +332,8 @@ public class SubNetworks {
         int last24 = Integer.parseInt(ip[1]);
         int last32 = Integer.parseInt(ip[0]);
 
-        if (ip.length > 4 ) {
-            throw new InvalidAddress("Invalid network address. Format example: 192.168.1.0 ");
+        if (ip.length != 4) {
+            throw new InvalidAddress("Invalid network address format. Format example: 192.168.1.0 ");
         }
         else if (last32 > 255 || last32 < 0) {
             throw new InvalidAddress("This ip address does not seems valid.");
