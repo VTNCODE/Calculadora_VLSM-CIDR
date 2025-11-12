@@ -37,14 +37,14 @@ public class Program {
         }
         SubNetworks network = new SubNetworks(ipAddress, mask, networks);
 
-        Texts texts = new Texts("C:\\Users\\Desktop\\Desktop\\Calculadora_VLSM-CIDR-main\\sub-net.txt", network);
-        texts.fileText();
-
         System.out.println();
         System.out.println("Subnet Total Hosts: " + network.totalHosts(mask));
         System.out.println("Subnet hosts needed: " + network.usedHosts());
         System.out.println();
         network.impressResults();
+
+        Texts texts = new Texts("C:\\Users\\Desktop\\Desktop\\Calculadora_VLSM-CIDR-main\\sub-net.txt", network);
+        texts.fileText();
 
 
         sc.close();
