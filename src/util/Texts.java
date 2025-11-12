@@ -23,6 +23,9 @@ public class Texts {
             bw.write("Your subnets need " + subNetworks.usedHosts() + " hosts.");
             bw.newLine();
             for (int i = 0; i < subNetworks.getNetwork().size(); i++) {
+                if (subNetworks.addressMayNotFit(subNetworks.networkAddress().get(i).getIpAddress())) {
+                    System.out.println("WARNING! It looks like this subnet won't fit into your network.");
+                }
                 bw.write("Name: " + subNetworks.getNetwork().get(i).getName());
                 bw.newLine();
                 bw.write("Hosts needed: " + subNetworks.getNetwork().get(i).getHosts());
