@@ -442,20 +442,20 @@ public class SubNetworks {
             networkAddress = address.split("\\.");
             int last32;
             last32 = Integer.parseInt(networkAddress[0]);
-            if (getMask() == 15 && last32 >= 2) {
+            if (getMask() == 7 && last32 >= 2) {
                 itsBigger = true;
-            } else if (getMask() == 14 && last32 >= 4) {
+            } else if (getMask() == 6 && last32 >= 4) {
                 itsBigger = true;
-            } else if (getMask() == 13 && last32 >= 8) {
+            } else if (getMask() == 5 && last32 >= 8) {
                 itsBigger = true;
-            } else if (getMask() == 12 && last32 >= 16) {
+            } else if (getMask() == 4 && last32 >= 16) {
                 itsBigger = true;
-            } else if (getMask() == 11 && last32 >= 32) {
+            } else if (getMask() == 3 && last32 >= 32) {
                 itsBigger = true;
-            } else if (getMask() == 10 && last32 >= 64) {
+            } else if (getMask() == 2 && last32 >= 64) {
                 itsBigger = true;
             }
-            else if (getMask() == 9 && last32 >= 128) {
+            else if (getMask() == 1 && last32 >= 128) {
                 itsBigger = true;
             }
         }
